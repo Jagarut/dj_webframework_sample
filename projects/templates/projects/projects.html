@@ -1,4 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
     <h1>Projects Template</h1>
+    <p>Hello you are on the {{message}}</p>
+
+    {% if number > 10 %}
+    <p>Number is greater than ten</p>
+    {% elif number == 10 %}
+    <p>Number is equal to ten</p>
+    {% else %}
+    <p>Number is smaller than ten</p>
+    {% endif %}
+
+    <hr>
+    <ul>
+    {% for project in projects  %}
+        <li><h3><a href="{% url 'project' project.id %}">{{project.title}}</a></h3><span style="color:blueviolet">{{project.description}}</span></li>
+    {% endfor %}
+    </ul>
+
+    <h1>Projects</h1>
 {% endblock content %}
