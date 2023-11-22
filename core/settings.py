@@ -119,6 +119,11 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+# Tells django where to upload user media generated content
+MEDIA_DIR = BASE_DIR / "static/images" 
+MEDIA_ROOT = MEDIA_DIR
+MEDIA_URL = "/images/"
  
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
