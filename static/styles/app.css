@@ -11,7 +11,7 @@
 }
 
 img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .tag > i.im {
@@ -522,6 +522,7 @@ img {
   height: 25rem;
   object-fit: cover;
   object-position: top center;
+  max-width: 100%;
 }
 
 .project__title {
