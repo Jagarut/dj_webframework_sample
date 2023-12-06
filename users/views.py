@@ -3,10 +3,13 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+
 from . import models
+from .forms import CustomUserCreationForm
 # Create your views here.
 
 def loginUser(request):
+    page = "login"
 
     if request.user.is_authenticated:
         return redirect("profiles") 
@@ -35,6 +38,29 @@ def logoutUser(request):
     messages.error(request, "User was logout!")
     return redirect('login')
 
+def registerUser(request):
+    page = "register"
+    form = CustomUserCreationForm()
+
+    if request.method == "POST":
+        form = CustomUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)   #saves the form data to create a new user instance but doesn't commit (save) it to the database immediately
+            # It's a common practice to standardize usernames to prevent case-related issues during authentication or to enforce a specific format.
+            user.username = user.username.lower()
+            user.save() #commits (saves) the modified user object to the database.
+
+            messages.success(request, "User account was created")
+
+            login(request, user)
+            return redirect("profiles")
+        
+        else:
+            messages.success(request, "An error has ocurred during registration")
+
+
+    context = {"page": page, "form": form}
+    return render(request, "users/login_register.html", context)
 
 def profiles(request):
     profiles = models.Profile.objects.all()
